@@ -45,6 +45,7 @@ export const getChatHistory = async (): Promise<ChatHistoryType> => {
  */
 export const sendMessage = async (message: string): Promise<MessageType> => {
   try {
+    console.log('Attempting to send message to:', API_BASE_URL);
     const response = await fetch(API_BASE_URL, {
       method: 'POST',
       headers: {
@@ -59,13 +60,16 @@ export const sendMessage = async (message: string): Promise<MessageType> => {
     });
     
     if (!response.ok) {
+      console.error('API response not ok:', response.status, response.statusText);
       throw new Error(`API error: ${response.status}`);
     }
     
     const data = await response.json();
+    console.log('Received response:', data);
     
     // Handle n8n response format
     const botMessage = data.response || data.message || data.input_message || "I couldn't process that message.";
+    console.log('Using bot message:', botMessage);
     
     return {
       id: Date.now().toString(),
@@ -75,6 +79,7 @@ export const sendMessage = async (message: string): Promise<MessageType> => {
     };
   } catch (error) {
     console.error('Failed to send message:', error);
+    console.error('Current API URL:', API_BASE_URL);
     return {
       id: Date.now().toString(),
       content: "Sorry, I'm having trouble connecting right now. Please try again later.",
