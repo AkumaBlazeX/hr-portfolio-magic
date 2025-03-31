@@ -20,7 +20,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter basename="/Potfolio-Website">
+        <BrowserRouter basename="/portfolio-sanath">
           <div className="flex flex-col min-h-screen">
             <Header />
             <main className="flex-grow">
