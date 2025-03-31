@@ -16,7 +16,7 @@ export interface ChatHistoryType {
 }
 
 // API Configuration
-const API_BASE_URL = 'http://localhost:5678/webhook/webhook-test/webhook/chat';
+const API_BASE_URL = import.meta.env.VITE_WEBHOOK_URL || 'http://localhost:5678/webhook/webhook-test/webhook/chat';
 
 /**
  * Fetches the chat history from the API
