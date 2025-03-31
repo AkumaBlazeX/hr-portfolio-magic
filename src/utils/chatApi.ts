@@ -16,7 +16,14 @@ export interface ChatHistoryType {
 }
 
 // API Configuration
-const API_BASE_URL = import.meta.env.VITE_WEBHOOK_URL || 'http://localhost:5678/webhook/webhook-test/webhook/chat';
+const isDevelopment = import.meta.env.DEV;
+const API_BASE_URL = isDevelopment 
+  ? 'http://localhost:5678/webhook/webhook-test/webhook/chat'
+  : import.meta.env.VITE_WEBHOOK_URL;
+
+if (!API_BASE_URL) {
+  console.error('Warning: VITE_WEBHOOK_URL is not set in production environment');
+}
 
 /**
  * Fetches the chat history from the API
