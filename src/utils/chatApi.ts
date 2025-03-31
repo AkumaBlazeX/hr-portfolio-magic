@@ -64,12 +64,14 @@ export const sendMessage = async (message: string): Promise<MessageType> => {
     
     const data = await response.json();
     
-    // Format the response from n8n
+    // Handle n8n response format
+    const botMessage = data.response || data.message || data.input_message || "I couldn't process that message.";
+    
     return {
-      id: data.timestamp.toString(),
-      content: data.input_message,
+      id: Date.now().toString(),
+      content: botMessage,
       sender: 'bot',
-      timestamp: new Date(parseInt(data.timestamp)).toISOString()
+      timestamp: new Date().toISOString()
     };
   } catch (error) {
     console.error('Failed to send message:', error);
