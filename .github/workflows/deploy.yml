@@ -1,3 +1,4 @@
+
 name: Deploy to GitHub Pages
 
 on:
@@ -28,6 +29,7 @@ jobs:
       - name: Build
         env:
           VITE_WEBHOOK_URL: ${{ secrets.VITE_WEBHOOK_URL }}
+          VITE_ENV: production
         run: npm run build
 
       - name: Upload artifact

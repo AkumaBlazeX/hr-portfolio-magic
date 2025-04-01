@@ -1,3 +1,4 @@
+
 /**
  * Chatbot API Service
  * 
@@ -17,11 +18,9 @@ export interface ChatHistoryType {
 
 // API Configuration
 const isDevelopment = import.meta.env.DEV;
-const API_BASE_URL = isDevelopment 
-  ? 'http://localhost:5678/webhook/webhook-test/webhook/chat'
-  : import.meta.env.VITE_WEBHOOK_URL;
+const API_BASE_URL = import.meta.env.VITE_WEBHOOK_URL;
 
-if (!API_BASE_URL) {
+if (!API_BASE_URL && !isDevelopment) {
   console.error('Warning: VITE_WEBHOOK_URL is not set in production environment');
 }
 
@@ -31,6 +30,10 @@ if (!API_BASE_URL) {
  */
 export const getChatHistory = async (): Promise<ChatHistoryType> => {
   try {
+    if (!API_BASE_URL) {
+      throw new Error('API URL not configured');
+    }
+    
     const response = await fetch(`${API_BASE_URL}/chat`);
     
     if (!response.ok) {
@@ -52,6 +55,10 @@ export const getChatHistory = async (): Promise<ChatHistoryType> => {
  */
 export const sendMessage = async (message: string): Promise<MessageType> => {
   try {
+    if (!API_BASE_URL) {
+      throw new Error('API URL not configured');
+    }
+    
     console.log('Attempting to send message to:', API_BASE_URL);
     const response = await fetch(API_BASE_URL, {
       method: 'POST',

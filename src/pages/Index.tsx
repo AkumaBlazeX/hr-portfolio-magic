@@ -13,7 +13,7 @@ const Index = () => {
   
   const [text] = useTypewriter({
     words: ["Data Engineer", "Data Analyst", "Automation Engineer"],
-    loop: true, // Changed from {} to true to fix TypeScript error
+    loop: true, 
     typeSpeed: 80,
     deleteSpeed: 50,
   });
